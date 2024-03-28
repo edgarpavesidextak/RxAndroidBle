@@ -1,10 +1,10 @@
 Change Log
 ==========
 Version 1.18.1
-* Fixed `CharacteristicLongWriteOperation` defaults for API 33 (Android 13) (https://github.com/dariuszseweryn/RxAndroidBle/pull/847)
+* Fixed `CharacteristicLongWriteOperation` defaults for API 33 (Android 13) (https://github.com/edgarpavesidextak/RxAndroidBle/pull/847)
 
 Version 1.18.0
-* Added `RxBleConnection#readPhy` and `RxBleConnection#setPreferredPhy`, thanks @JamesDougherty (https://github.com/dariuszseweryn/RxAndroidBle/pull/840)
+* Added `RxBleConnection#readPhy` and `RxBleConnection#setPreferredPhy`, thanks @JamesDougherty (https://github.com/edgarpavesidextak/RxAndroidBle/pull/840)
 
 Version 1.17.2
 * Fixed log tags generation on builds with Proguard enabled (https://github.com/Polidea/RxAndroidBle/pull/814)

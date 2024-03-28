@@ -79,7 +79,7 @@ implementation "com.polidea.rxandroidble3:mockclient:1.18.1"
 ### License
 
     Copyright 2016 Polidea Sp. z o.o
-    Copyright 2021 Dariusz Seweryn
+    Copyright 2021 Edgar Pavesi
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
