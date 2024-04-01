@@ -62,10 +62,6 @@ afterEvaluate { project ->
         repositories {
             maven {
                 url = uri(isReleaseBuild() ? getReleaseRepositoryUrl() : getSnapshotRepositoryUrl())
-                credentials {
-                    username = getRepositoryUsername()
-                    password = getRepositoryPassword()
-                }
             }
         }
         publications {
