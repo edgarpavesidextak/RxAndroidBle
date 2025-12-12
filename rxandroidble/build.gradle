@@ -68,3 +68,8 @@ dependencies {
     testImplementation rootProject.ext.libs.groovy
     testImplementation rootProject.ext.libs.spock
 }
+
+
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
+}
