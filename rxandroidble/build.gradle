@@ -69,7 +69,17 @@ dependencies {
     testImplementation rootProject.ext.libs.spock
 }
 
-
+afterEvaluate {
+    publishing {
+        publications.all { publication ->
+            if (publication instanceof MavenPublication) {
+                // Remove qualquer artefato que termine com 'asc'
+                var artifactsToRemove = publication.artifacts.matching { it.extension == 'asc' }
+                publication.artifacts.removeAll(artifactsToRemove)
+            }
+        }
+    }
+}
 tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
 }
