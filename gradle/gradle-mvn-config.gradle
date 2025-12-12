@@ -63,18 +63,18 @@ afterEvaluate { project ->
                 url = uri(isReleaseBuild() ? getReleaseRepositoryUrl() : getSnapshotRepositoryUrl())
             }
         }
-        publications {
-            release(MavenPublication) {
-                afterEvaluate {
-                    if (isAndroidProject(project)) {
-                        from components.release
-                    } else {
-                        from components.java
-                        artifact sourcesJar
-                        artifact javadocsJar
-                    }
-                }
-            }
-        }
+//        publications {
+//            release(MavenPublication) {
+//                afterEvaluate {
+//                    if (isAndroidProject(project)) {
+//                        from components.release
+//                    } else {
+//                        from components.java
+//                        artifact sourcesJar
+//                        artifact javadocsJar
+//                    }
+//                }
+//            }
+//        }
     }
 }
