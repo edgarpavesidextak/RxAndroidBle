@@ -75,13 +75,21 @@ afterEvaluate {
     publishing {
         publications.all { publication ->
             if (publication instanceof MavenPublication) {
-                // Remove qualquer artefato que termine com 'asc'
+                // 1. Remove artefatos de assinatura (.asc) da lista de artefatos
                 var artifactsToRemove = publication.artifacts.matching { it.extension == 'asc' }
                 publication.artifacts.removeAll(artifactsToRemove)
+
+                // 2. Desativa a assinatura do POM (se houver tentativa de assinar o arquivo XML)
+                // Isso remove a associação do arquivo .asc ao POM gerado
+                if (publication.pom.hasProperty('ascFile')) {
+                    publication.pom.ascFile = null
+                }
             }
         }
     }
-}
-tasks.withType(GenerateModuleMetadata).configureEach {
-    enabled = false
+
+    // 3. Desativa explicitamente todas as tarefas de assinatura para garantir
+    tasks.withType(Sign).configureEach {
+        enabled = false
+    }
 }
