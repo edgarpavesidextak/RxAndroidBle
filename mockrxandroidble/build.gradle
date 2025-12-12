@@ -44,10 +44,34 @@ android {
     }
 }
 
-afterEvaluate { project ->
-    // add explicit dependencies to compile groovy when testing
+afterEvaluate {
     testDebugUnitTest.dependsOn 'compileDebugUnitTestGroovyWithGroovyc'
     testReleaseUnitTest.dependsOn 'compileReleaseUnitTestGroovyWithGroovyc'
+    // 1. Desativa a geração de metadados do Gradle (module.json)
+    tasks.withType(GenerateModuleMetadata).configureEach {
+        enabled = false
+    }
+
+    // 2. Desativa explicitamente as tarefas de assinatura
+    tasks.withType(Sign).configureEach {
+        enabled = false
+    }
+
+    // 3. Limpa a lista de artefatos da publicação
+    publishing {
+        publications.all { publication ->
+            if (publication instanceof MavenPublication) {
+                // Remove artefatos que terminam em .asc
+                def artifactsToRemove = publication.artifacts.matching { it.extension == 'asc' }
+                publication.artifacts.removeAll(artifactsToRemove)
+
+                // Remove referência de assinatura no arquivo POM
+                if (publication.pom.hasProperty('ascFile')) {
+                    publication.pom.ascFile = null
+                }
+            }
+        }
+    }
 }
 
 dependencies {
