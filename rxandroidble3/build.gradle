@@ -71,25 +71,32 @@ dependencies {
     testImplementation rootProject.ext.libs.groovy
     testImplementation rootProject.ext.libs.spock
 }
+
 afterEvaluate {
+    // 1. Desativa a geração de metadados do Gradle (module.json)
+    // Isso resolve o erro: "Cannot publish module metadata because an artifact... has been removed"
+    tasks.withType(GenerateModuleMetadata).configureEach {
+        enabled = false
+    }
+
+    // 2. Desativa explicitamente as tarefas de assinatura
+    tasks.withType(Sign).configureEach {
+        enabled = false
+    }
+
+    // 3. Limpa a lista de artefatos da publicação
     publishing {
         publications.all { publication ->
             if (publication instanceof MavenPublication) {
-                // 1. Remove artefatos de assinatura (.asc) da lista de artefatos
-                var artifactsToRemove = publication.artifacts.matching { it.extension == 'asc' }
+                // Remove artefatos que terminam em .asc
+                def artifactsToRemove = publication.artifacts.matching { it.extension == 'asc' }
                 publication.artifacts.removeAll(artifactsToRemove)
 
-                // 2. Desativa a assinatura do POM (se houver tentativa de assinar o arquivo XML)
-                // Isso remove a associação do arquivo .asc ao POM gerado
+                // Remove referência de assinatura no arquivo POM
                 if (publication.pom.hasProperty('ascFile')) {
                     publication.pom.ascFile = null
                 }
             }
         }
-    }
-
-    // 3. Desativa explicitamente todas as tarefas de assinatura para garantir
-    tasks.withType(Sign).configureEach {
-        enabled = false
     }
 }
