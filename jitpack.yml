@@ -1,2 +1,4 @@
 jdk:
   - openjdk21
+install:
+  - ./gradlew :rxandroidble:assembleRelease :rxandroidble:publishToMavenLocal :mockrxandroidble:assembleRelease :mockrxandroidble:publishToMavenLocal -x :sample:assembleRelease -x :sample:verifyReleaseResources
