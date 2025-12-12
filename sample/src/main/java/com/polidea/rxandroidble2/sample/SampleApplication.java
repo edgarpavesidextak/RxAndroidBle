@@ -26,21 +26,6 @@ public class SampleApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        rxBleClient = RxBleClient.create(this);
-        RxBleClient.updateLogOptions(new LogOptions.Builder()
-                .setLogLevel(LogConstants.INFO)
-                .setMacAddressLogSetting(LogConstants.MAC_ADDRESS_FULL)
-                .setUuidsLogSetting(LogConstants.UUIDS_FULL)
-                .setShouldLogAttributeValues(true)
-                .build()
-        );
-        RxJavaPlugins.setErrorHandler(throwable -> {
-            if (throwable instanceof UndeliverableException && throwable.getCause() instanceof BleException) {
-                Log.v("SampleApplication", "Suppressed UndeliverableException: " + throwable.toString());
-                return; // ignore BleExceptions as they were surely delivered at least once
-            }
-            // add other custom handlers if needed
-            throw new RuntimeException("Unexpected Throwable in RxJavaPlugins error handler", throwable);
-        });
+
     }
 }

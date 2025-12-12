@@ -34,6 +34,10 @@ android {
                 '../rxandroidble/src/test/java' // this produces a warning about duplicate content roots, but it is still required
         ]
     }
+
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 configurations.all {
