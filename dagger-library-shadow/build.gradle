@@ -14,7 +14,7 @@ import com.github.jengelman.gradle.plugins.shadow.transformers.ServiceFileTransf
 shadowJar {
     mustRunAfter jar
     transform(ServiceFileTransformer)
-    classifier = ''
+    archiveClassifier = 'all'
 }
 
 artifacts {
@@ -38,7 +38,7 @@ java {
 }
 
 task javadocs(type: Javadoc) {
-    source = sourceSets.main.java.source
+    sourceSets.main.java.srcDirs
     classpath += configurations.compileClasspath
 }
 
