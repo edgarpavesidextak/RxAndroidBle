@@ -56,25 +56,41 @@ if (isAndroidProject()) {
     }
 }
 
-afterEvaluate { project ->
-    publishing {
-        repositories {
-            maven {
-                url = uri(isReleaseBuild() ? getReleaseRepositoryUrl() : getSnapshotRepositoryUrl())
-            }
-        }
-//        publications {
-//            release(MavenPublication) {
-//                afterEvaluate {
-//                    if (isAndroidProject(project)) {
-//                        from components.release
-//                    } else {
-//                        from components.java
-//                        artifact sourcesJar
-//                        artifact javadocsJar
-//                    }
-//                }
+//afterEvaluate { project ->
+//    publishing {
+//        repositories {
+//            maven {
+//                url = uri(isReleaseBuild() ? getReleaseRepositoryUrl() : getSnapshotRepositoryUrl())
 //            }
 //        }
+////        publications {
+////            release(MavenPublication) {
+////                afterEvaluate {
+////                    if (isAndroidProject(project)) {
+////                        from components.release
+////                    } else {
+////                        from components.java
+////                        artifact sourcesJar
+////                        artifact javadocsJar
+////                    }
+////                }
+////            }
+////        }
+//    }
+//}
+
+afterEvaluate {
+    publishing {
+        publications.all { publication ->
+            if (publication instanceof MavenPublication) {
+                // Remove qualquer artefato que termine com .asc (assinaturas)
+                def artifactsToRemove = publication.artifacts.findAll { it.extension == 'asc' }
+                publication.artifacts.removeAll(artifactsToRemove)
+            }
+        }
     }
+}
+
+tasks.withType(GenerateModuleMetadata).configureEach {
+    enabled = false
 }
