@@ -37,6 +37,7 @@ public class AndroidScanObjectsConverter {
         return builder
                 .setReportDelay(scanSettings.getReportDelayMillis())
                 .setScanMode(scanSettings.getScanMode())
+                .setPhy(android.bluetooth.le.ScanSettings.PHY_LE_ALL_SUPPORTED)
                 .build();
     }
 
